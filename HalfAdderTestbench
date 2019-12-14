@@ -1,0 +1,44 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity firstInstallTestTB is
+end firstInstallTestTB;
+
+architecture test of firstInstallTestTB is
+	component firstInstallTest
+	port(
+        a:      in      std_ulogic;
+        b:      in      std_ulogic;
+        o:      out     std_ulogic;
+        c:      out     std_ulogic
+);
+	end component firstInstallTest;
+	signal a, b, o, c : std_ulogic;
+begin
+	half_adder: firstInstallTest port map (A => a, B => b, O => o, C => c);
+	process begin
+	
+	a <= 'X'; 
+	b <= 'X';
+	wait for 5 ns;
+
+	a <= '0';
+	b <= '0';
+
+	wait for 5 ns;
+        a <= '1';
+        b <= '0';
+        wait for 5 ns;
+
+	a <= '0';
+        b <= '1';
+	wait for 5 ns;
+
+        a <= '1';
+        b <= '1';
+	wait for 5 ns;
+	assert false report "reached the end of test";
+	wait;
+
+	end process;
+end test;
